@@ -55,7 +55,14 @@ class HttpMock(object):
     self.uri = uri
     self.method = method
     self.body = body
+
+    # NB: reproduce the header normalization behavior
+    if headers is None:
+      headers = {}
+    else:
+      headers = httplib2._normalize_headers(headers)
     self.headers = headers
+
     return httplib2.Response(self.response_headers), self.data
 
 
